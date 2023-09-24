@@ -5,6 +5,7 @@ using namespace std;
 
 int main(int argc, const char* argv[])
 {
-    std::cout << "Hello brave new world" << std::endl;
+    Multimedia a("abc", "c:/usr/videos");
+    a.printNames(std::cout);
     return 0;
 }
