@@ -21,12 +21,16 @@ class Multimedia {
     Multimedia(std::string name, std::string filePath);
 
     /**
-     * @brief Sends the name and file path to output stream in the
-     * format [filePath]/[name]
+     * @brief Sends the name and file path to output stream
      * 
      * @param out Stream to be outputted to
      */
     void printNames(std::ostream &out) const;
+    
+    /**
+     * @brief Executes the file
+     */
+    void virtual play() = 0;
 
     std::string getName() const;
     std::string getFilePath() const;
