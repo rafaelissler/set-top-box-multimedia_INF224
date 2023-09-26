@@ -25,7 +25,7 @@ class Multimedia {
      * 
      * @param out Stream to be outputted to
      */
-    virtual void printNames(std::ostream &out) const;
+    virtual void printValues(std::ostream &out) const;
     
     /**
      * @brief Executes the file

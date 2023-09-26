@@ -2,7 +2,7 @@
 #define PHOTO_H
 
 /**
- * @brief Class for a video object
+ * @brief Class for a photo object
  */
 class Photo : public Multimedia {
     private:
@@ -11,17 +11,26 @@ class Photo : public Multimedia {
     public:
     ~Photo() {}
     Photo(): Multimedia() {}
+
+    /**
+     * @brief Construct a new Photo object
+     * 
+     * @param name Name of the file
+     * @param filePath Complete path of the file
+     * @param lat Latitude of the photo
+     * @param lon Longitude of the photo
+     */
     Photo(std::string name, std::string filePath, float lat, float lon):
     Multimedia(name, filePath), lat(lat), lon(lon) {}
 
     /**
-     * @brief Sends the name and file path to output stream
+     * @brief Sends the name, file path, latitude and longitude to output stream
      * 
      * @param out Stream to be outputted to
      */
-    void printNames(std::ostream &out) const override {
-        out << "Name:" << getName() << ", Path:" << getFilePath() <<
-        ", Latitude:"  << lat << ", Longitude" << lon << '\n';
+    void printValues(std::ostream &out) const override {
+        out << "Name: " << getName() << ", Path: " << getFilePath() <<
+        ", Latitude: "  << lat << ", Longitude: " << lon << '\n';
     }
 
     /**

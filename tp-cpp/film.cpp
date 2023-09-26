@@ -8,7 +8,7 @@ Film::~Film() {
     delete[] chapters;
 }
 
-Film::Film(): Video::Video() {}
+Film::Film(): Video::Video(), chapters(NULL), numChapters(0) {}
 
 Film::Film(std::string name, std::string filePath, int duration, int* chapters, int numChapters):
     Video(name, filePath, duration) {
@@ -19,9 +19,9 @@ Film::Film(std::string name, std::string filePath, int duration, int* chapters, 
     }
 }
 
-void Film::printNames(std::ostream &out) const {
-        out << "Name:" << getName() << ", Path:" << getFilePath() <<
-        ", Duration:" << getDuration() << ", Chapters:{";
+void Film::printValues(std::ostream &out) const {
+        out << "Name: " << getName() << ", Path: " << getFilePath() <<
+        ", Duration: " << getDuration() << ", Chapters: {";
         for (int i = 0; i < numChapters; i++) {
             out << chapters[i];
             if (i < (numChapters-1)) out << ", ";

@@ -3,19 +3,20 @@
 #include "video.h"
 #include "film.h"
 #include "photo.h"
+#include "group.h"
 
 using namespace std;
 
 int main(int argc, const char* argv[])
 {
     /*Video v("telecom", "video.mp4", 5);
-    v.printNames(cout);
+    v.printValues(cout);
     v.setDuration(3);
     v.setName("video2");
-    v.printNames(cout);
+    v.printValues(cout);
 
     Photo p("github", "image.png", 1.5, 4.1);
-    p.printNames(cout);
+    p.printValues(cout);
     p.play();*/
 
     /*const int numArray = 5;
@@ -34,7 +35,7 @@ int main(int argc, const char* argv[])
     }
 
     for (int i = 0; i < numArray; i++) {
-        mediaArray[i]->printNames(cout);
+        mediaArray[i]->printValues(cout);
         mediaArray[i]->play();
     }
 
@@ -44,19 +45,34 @@ int main(int argc, const char* argv[])
 
     /*Photo* p1 = new Photo("github", "image.png", 1.5, 4.1);
     Multimedia* m1 = p1;
-    p1->printNames(cout);
-    m1->printNames(cout);*/
+    p1->printValues(cout);
+    m1->printValues(cout);*/
 
     int chap[5];
-    for (int i = 0; i < 5; i++) chap[i] = i;
-    Film f("film", "video.mp4", 6, chap, 5);
-    cout << f.getNumChapters() << '\n';
-    f.printNames(cout);
+    for (int i = 1; i < 6; i++) chap[i] = i;
+    Film f("avatar", "film.mov", 10, chap, 5);
+    /*cout << f.getNumChapters() << '\n';
+    f.printValues(cout);
 
     int* newchaps = f.getChapters();
     for (int i = 0; i < f.getNumChapters(); i++) cout << newchaps[i] << '\n';
 
-    delete[] newchaps;
+    delete[] newchaps;*/
+
+    Video v("telecom", "video.mp4", 5);
+    Photo p1("github", "image1.png", 1.5, 4.1);
+    Photo p2("gnu", "image2.png", 3.3, 7);
+
+    Group g1("Group 1");
+    g1.push_back(&f);
+    g1.push_back(&v);
+    g1.push_back(&p1);
+    g1.printValues(cout);
+
+    Group g2("Group 2");
+    g2.push_back(&f);
+    g2.push_back(&p2);
+    g2.printValues(cout);
 
     cout << "Finished succesfully\n";
     return 0;
