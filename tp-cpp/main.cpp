@@ -34,6 +34,10 @@ int main(int argc, const char* argv[])
 
     for (int i = 0; i < numArray; i++) {
         mediaArray[i]->printNames(cout);
+        mediaArray[i]->play();
+    }
+
+    for (int i = 0; i < numArray; i++) {
         delete mediaArray[i];
     }
     /*Photo* p1 = new Photo("github", "image.png", 1.5, 4.1);
