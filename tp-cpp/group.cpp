@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
+#include <memory>
+#include <list>
 #include "multimedia.h"
 #include "group.h"
 
-Group::Group(std::string name): std::list<Multimedia*>(), name(name) {}
+Group::Group(std::string name): std::list<std::shared_ptr<Multimedia>>(), name(name) {}
 
 void Group::printValues(std::ostream &out) {
     out << "Group name: " << name << '\n';

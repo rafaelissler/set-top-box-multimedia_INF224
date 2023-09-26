@@ -9,7 +9,11 @@ class Photo : public Multimedia {
     float lat{}, lon{};
 
     public:
-    ~Photo() {}
+    ~Photo() {
+        #ifdef DEBUG
+        std::cout << "Photo " << Multimedia::getName() << " was deleted\n";
+        #endif
+    }
     Photo(): Multimedia() {}
 
     /**

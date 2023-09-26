@@ -1,12 +1,10 @@
 #ifndef GROUP_H
 #define GROUP_H
 
-#include <list>
-
 /**
  * @brief Class for a group of pointers to Multimedia objects
  */
-class Group: public std::list<Multimedia*>{
+class Group: public std::list<std::shared_ptr<Multimedia>>{
     private:
     std::string name;
 

@@ -9,7 +9,11 @@ class Video : public Multimedia {
     int duration{};
 
     public:
-    ~Video(){}
+    ~Video() {
+        #ifdef DEBUG
+        std::cout << "Video " << Multimedia::getName() << " was deleted\n";
+        #endif
+    }
     Video(): Multimedia() {}
 
     /**

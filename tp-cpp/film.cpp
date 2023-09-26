@@ -6,6 +6,9 @@
 
 Film::~Film() {
     delete[] chapters;
+    #ifdef DEBUG
+    std::cout << "Film " << Multimedia::getName() << " was deleted\n";
+    #endif
 }
 
 Film::Film(): Video::Video(), chapters(NULL), numChapters(0) {}
