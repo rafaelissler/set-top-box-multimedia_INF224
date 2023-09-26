@@ -10,7 +10,7 @@ class Multimedia {
     std::string filePath;
 
     public:
-    ~Multimedia();
+    virtual ~Multimedia();
     Multimedia();
     /**
      * @brief Construct a new Multimedia object
@@ -25,7 +25,7 @@ class Multimedia {
      * 
      * @param out Stream to be outputted to
      */
-    void printNames(std::ostream &out) const;
+    virtual void printNames(std::ostream &out) const;
     
     /**
      * @brief Executes the file
