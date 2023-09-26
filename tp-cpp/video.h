@@ -11,7 +11,7 @@ class Video : public Multimedia {
     public:
     ~Video() {
         #ifdef DEBUG
-        std::cout << "Video " << Multimedia::getName() << " was deleted\n";
+        std::cout << "[D] Video " << Multimedia::getName() << " was deleted\n";
         #endif
     }
     Video(): Multimedia() {}
@@ -41,7 +41,8 @@ class Video : public Multimedia {
      */
     void play() override {
         std::string msg = "mpv " + getFilePath() + " &";
-        system(msg.data());
+
+        if (system(msg.data()));    // Place in an if statement to ignore the warning message
     }
 
     int getDuration() const {return duration;}

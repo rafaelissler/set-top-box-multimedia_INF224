@@ -11,7 +11,7 @@ class Photo : public Multimedia {
     public:
     ~Photo() {
         #ifdef DEBUG
-        std::cout << "Photo " << Multimedia::getName() << " was deleted\n";
+        std::cout << "[D] Photo " << Multimedia::getName() << " was deleted\n";
         #endif
     }
     Photo(): Multimedia() {}
@@ -42,7 +42,7 @@ class Photo : public Multimedia {
      */
     void play() override {
         std::string msg = "imagej " + getFilePath() + " &";
-        system(msg.data());
+        if (system(msg.data()));    // Place in an if statement to ignore the warning message
     }
 
     float getLat() const {return lat;}

@@ -7,12 +7,21 @@
 
 Group::Group(std::string name): std::list<std::shared_ptr<Multimedia>>(), name(name) {}
 
-void Group::printValues(std::ostream &out) {
+void Group::printValues(std::ostream &out) const {
     out << "Group name: " << name << '\n';
-    for (auto const& i: *this) {
+    for (const auto& i: *this) {
+        out << "\t>";
         i->printValues(out);
     }
-    out << "_______________________________________________\n";
+}
+
+void Group::erase(std::string name) {
+    for (auto it = this->begin(); it !=this->end();) {
+        if ((*it)->getName() == name) {
+            std::list<std::shared_ptr<Multimedia>>::erase(it);
+            break;
+        } else {++it;}
+    }
 }
 
 std::string Group::getName() const {return name;}

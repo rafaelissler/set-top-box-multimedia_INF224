@@ -1,6 +1,8 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include <list>
+
 /**
  * @brief Class for a group of pointers to Multimedia objects
  */
@@ -21,7 +23,8 @@ class Group: public std::list<std::shared_ptr<Multimedia>>{
      * 
      * @param out Stream to be outputted to
      */
-    void printValues(std::ostream &out);
+    void printValues(std::ostream &out) const;
+    void erase(std::string name);
     
     std::string getName() const;
     void setName(std::string name);

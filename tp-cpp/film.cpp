@@ -7,7 +7,7 @@
 Film::~Film() {
     delete[] chapters;
     #ifdef DEBUG
-    std::cout << "Film " << Multimedia::getName() << " was deleted\n";
+    std::cout << "[D] Film " << Multimedia::getName() << " was deleted\n";
     #endif
 }
 
