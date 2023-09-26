@@ -20,7 +20,8 @@ class Photo : public Multimedia {
      * @param out Stream to be outputted to
      */
     void printNames(std::ostream &out) const override {
-        out << getName() << ", " << getFilePath() << ", "  << lat << ", " << lon << '\n';
+        out << "Name:" << getName() << ", Path:" << getFilePath() <<
+        ", Latitude:"  << lat << ", Longitude" << lon << '\n';
     }
 
     /**

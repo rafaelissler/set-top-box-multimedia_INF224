@@ -15,7 +15,7 @@ Multimedia::Multimedia(std::string name, std::string filePath) {
 Multimedia::~Multimedia() {}
 
 void Multimedia::printNames(std::ostream &out) const {
-    out << name << ", " << filePath << '\n';
+    out << "Name:" << name << ", Path:" << filePath << '\n';
 }
 
 std::string Multimedia::getName() const { return name; }

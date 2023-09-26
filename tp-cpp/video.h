@@ -19,8 +19,9 @@ class Video : public Multimedia {
      * 
      * @param out Stream to be outputted to
      */
-    void printNames(std::ostream &out) const override {
-        out << getName() << ", " << getFilePath() << ", " << duration << '\n';
+    virtual void printNames(std::ostream &out) const override {
+        out << "Name:" << getName() << ", Path:" << getFilePath() <<
+        ", Duration:" << duration << '\n';
     }
 
     /**

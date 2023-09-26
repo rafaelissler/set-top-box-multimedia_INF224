@@ -1,6 +1,7 @@
 #include <iostream>
 #include "multimedia.h"
 #include "video.h"
+#include "film.h"
 #include "photo.h"
 
 using namespace std;
@@ -17,7 +18,7 @@ int main(int argc, const char* argv[])
     p.printNames(cout);
     p.play();*/
 
-    const int numArray = 5;
+    /*const int numArray = 5;
     Multimedia* mediaArray[numArray];
     string name = "";
     int j = 1, k = 1;
@@ -39,11 +40,23 @@ int main(int argc, const char* argv[])
 
     for (int i = 0; i < numArray; i++) {
         delete mediaArray[i];
-    }
+    }*/
+
     /*Photo* p1 = new Photo("github", "image.png", 1.5, 4.1);
     Multimedia* m1 = p1;
     p1->printNames(cout);
     m1->printNames(cout);*/
+
+    int chap[5];
+    for (int i = 0; i < 5; i++) chap[i] = i;
+    Film f("film", "video.mp4", 6, chap, 5);
+    cout << f.getNumChapters() << '\n';
+    f.printNames(cout);
+
+    int* newchaps = f.getChapters();
+    for (int i = 0; i < f.getNumChapters(); i++) cout << newchaps[i] << '\n';
+
+    delete[] newchaps;
 
     cout << "Finished succesfully\n";
     return 0;
