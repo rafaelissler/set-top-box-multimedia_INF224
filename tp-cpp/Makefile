@@ -11,11 +11,13 @@
 #
 PROG = tp_multimedia
 CLIENT = client
+SERVER = server
 
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
 SOURCES = multimedia.cpp film.cpp group.cpp manager.cpp tcp/ccsocket.cpp tcp/tcpserver.cpp main.cpp
+SERVER_SOURCES = multimedia.cpp film.cpp group.cpp manager.cpp tcp/ccsocket.cpp tcp/tcpserver.cpp tcp/server.cpp
 CLIENT_SOURCES = tcp/client.cpp tcp/ccsocket.cpp 
 
 #
@@ -23,6 +25,7 @@ CLIENT_SOURCES = tcp/client.cpp tcp/ccsocket.cpp
 #
 OBJETS = ${SOURCES:%.cpp=%.o}
 CLIENT_OBJETS=${CLIENT_SOURCES:%.cpp=%.o}
+SERVER_OBJETS = ${SERVER_SOURCES:%.cpp=%.o}
 
 #
 # Compilateur C++
@@ -70,20 +73,30 @@ ${PROG}: depend-${PROG} ${OBJETS}
 clean:
 	-@$(RM) *.o depend-${PROG} core 1>/dev/null 2>&1
 	-@$(RM) *.o depend-${CLIENT} core 1>/dev/null 2>&1
+	-@$(RM) tcp/*.o depend-${CLIENT} core 1>/dev/null 2>&1
+	-@$(RM) tcp/*.o depend-${SERVER} core 1>/dev/null 2>&1
 
 clean-all: clean
 	-@$(RM) ${PROG} 1>/dev/null 2>&1
+	-@$(RM) ${CLIENT} 1>/dev/null 2>&1
+	-@$(RM) ${SERVER} 1>/dev/null 2>&1
   
 tar:
 	tar cvf ${PROG}.tar.gz ${SOURCES}
 
 run-${CLIENT}: depend-${CLIENT} ${CLIENT_OBJETS}
-	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
+	${CXX} -o ${CLIENT} ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
 	./${CLIENT}
 
 ${CLIENT}: depend-${CLIENT} ${CLIENT_OBJETS}
 	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
-	
+
+run-${SERVER}: depend-${SERVER} ${SERVER_OBJETS}
+	${CXX} -o ${SERVER} ${CXXFLAGS} ${LDFLAGS} ${SERVER_OBJETS} ${LDLIBS}
+	./${SERVER}
+
+${SERVER}: depend-${SERVER} ${SERVER_OBJETS}
+	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${SERVER_OBJETS} ${LDLIBS}
 
 # Gestion des dependances : creation automatique des dependances en utilisant 
 # l'option -MM de g++ (attention tous les compilateurs n'ont pas cette option)
@@ -93,6 +106,9 @@ depend-${PROG}:
 
 depend-${CLIENT}:
 	${CXX} ${CXXFLAGS} -MM ${CLIENT_SOURCES} > depend-${CLIENT}
+
+depend-${SERVER}:
+	${CXX} ${CXXFLAGS} -MM ${SERVER_SOURCES} > depend-${SERVER}
 
 
 ###########################################
@@ -116,5 +132,4 @@ depend-${CLIENT}:
 #
 # Inclusion du fichier des dependances
 #
--include depend-${PROG}
--include depend-${CLIENT}
+#-include depend-${PROG}
