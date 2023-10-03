@@ -29,7 +29,7 @@ void Film::printValues(std::ostream &out) const {
             out << chapters[i];
             if (i < (numChapters-1)) out << ", ";
         }
-        out << "}\n";
+        out << "}";
 }
 
 int* Film::getChapters() const {
@@ -50,3 +50,5 @@ void Film::setChapters(int* chapters, int numChapters) {
         this->chapters[i] = chapters[i];
     }
 }
+
+std::string Film::getType() const {return "film";}

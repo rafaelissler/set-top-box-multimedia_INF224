@@ -1,72 +1,76 @@
-#include <iostream>
-#include <memory>
-#include <map>
-#include "multimedia.h"
-#include "video.h"
-#include "film.h"
-#include "photo.h"
-#include "group.h"
-#include "manager.h"
+#include "main.h"
 
 using namespace std;
 
-typedef shared_ptr<Multimedia> MultimediaPtr;
+const int PORT = 4466;
 
-int main(int argc, const char* argv[])
-{
-    int chap[5];
-    for (int i = 0; i < 5; i++) chap[i] = i+1;
-
+int main(int argc, const char* argv[]) {
+    // Initialize everything
+    startupCmds();
     Manager mngr;
-    
-    shared_ptr<Film> f = mngr.createFilm("avatar", "film.mov", 10, chap, 5);
-    f->printValues(cout);
-    
-    shared_ptr<Photo> p = mngr.createPhoto("gnu", "image.png", 3.3, 7);
-    p->printValues(cout);
 
-    shared_ptr<Video> v = mngr.createVideo("telecom", "video.mp4", 5);
-    v->printValues(cout);
+    int chapters[5];
+    for (int i = 0; i < 5; i++) chapters[i] = i+1;
+    shared_ptr<Film> f = mngr.createFilm("avatar", "film.mov", 10, chapters, 5);
+    shared_ptr<Photo> p1 = mngr.createPhoto("github", "photo1.png", 3.3, 7);
+    shared_ptr<Photo> p2 = mngr.createPhoto("gnu", "photo2.png", 3.7, 4);
+    shared_ptr<Video> v1 = mngr.createVideo("telecom", "video.mp4", 5);
+    shared_ptr<Video> v2 = mngr.createVideo("gitlab", "video2.mp4", 7);
 
-    shared_ptr<Group> group = mngr.createGroup("Group 1");
+    shared_ptr<Group> group = mngr.createGroup("toto");
     group->push_back(f);
-    group->push_back(p);
-    group->push_back(v);
-    group->printValues(cout);
+    group->push_back(p1);
+    group->push_back(v1);
 
-    cout << "_______________________________________\n";
+    shared_ptr<Group> group2 = mngr.createGroup("titi");
+    group2->push_back(f);
+    group2->push_back(p2);
+    group2->push_back(v2);
 
-    mngr.printMultimedia("avatar", cout);
-    mngr.printMultimedia("gnu", cout);
-    mngr.printMultimedia("telecom", cout);
-    mngr.printGroup("Group 1", cout);
+    // Define the callback of server
+    shared_ptr<TCPServer> server = make_shared<TCPServer>([&]
+    (std::string const& request, std::string& response) {
+        #ifdef DEBUG
+        cout << "[D] Request received: " << request << endl;
+        #endif
+        // Default response
+        response = "OK";
 
-    mngr.printMultimedia("abc", cout);
-    mngr.printGroup("Group 2", cout);
+        stringstream ss(request);
+        string arg;
+        ss >> arg;  // Get first argument
 
-    cout << "_______________________________________\n";
-    mngr.removeMultimedia("gnu");
-    mngr.printGroup("Group 1", cout);
-    mngr.removeMultimedia("gnu");
+        // If it failed or client wants to quit, disconnect
+        if (!ss.fail() && arg != "quit") {
+            auto it = cmds.find(arg);
+            if (it != cmds.end()) {
+                // If it finds the request
+                if (!ss.fail()) {
+                    // Call the lambda associated with request
+                    response = it->second(ss, mngr);
+                    #ifdef DEBUG
+                    std::cout << "[D] What will be sent: " << response << '\n';
+                    #endif
+                }
+            } else {
+                response = "Error: Could not understand " + arg;
+                std::cout << response << '\n';
+            }
+        }
+        else {
+            response = "ERROR";
+        }
+        ss.str("");
 
-    mngr.removeGroup("Group 1");
-    mngr.printGroup("Group 1", cout);
-    mngr.printMultimedia("avatar", cout);
-    mngr.printMultimedia("telecom", cout);
+        return true;
+    });
 
-    /*shared_ptr<Film> f(new Film("avatar", "film.mov", 10, chap, 5));
-    shared_ptr<Photo> p2(new Photo("gnu", "image2.png", 3.3, 7));
-    
-    Group g1("Group 1");
-    g1.push_back(f);
-    g1.push_back(make_shared<Video>("telecom", "video.mp4", 5));
-    g1.push_back(make_shared<Photo>("github", "image1.png", 1.5, 4.1));
-    g1.printValues(cout);
-
-    Group g2("Group 2");
-    g2.push_back(f);
-    g2.push_back(p2);
-    g2.printValues(cout);*/
+    cout << "Opening server on port " << PORT << '\n';
+    int err = server->run(PORT);
+    if (err < 0) {
+        cout << "Error: Server could not be started\n";
+        return 1;
+    }
 
     cout << "Finished succesfully\n";
     return 0;

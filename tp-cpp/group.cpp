@@ -8,15 +8,19 @@
 Group::Group(std::string name): std::list<std::shared_ptr<Multimedia>>(), name(name) {}
 
 void Group::printValues(std::ostream &out) const {
-    out << "Group name: " << name << '\n';
+    // Print first the name of the group, then all of it's objects contents
+    out << "Group name: " << name;
     for (const auto& i: *this) {
-        out << "\t>";
+        out << "{ ";
         i->printValues(out);
+        out << " }";
     }
 }
 
 void Group::erase(std::string name) {
+    // Iterate through the groups
     for (auto it = this->begin(); it !=this->end();) {
+        // If it has the give name, delete it
         if ((*it)->getName() == name) {
             std::list<std::shared_ptr<Multimedia>>::erase(it);
             break;

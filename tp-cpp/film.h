@@ -39,6 +39,7 @@ class Film : public Video {
      */
     int* getChapters() const;
     int getNumChapters() const;
+    std::string getType() const override;
 
     void setChapters(int* chapters, int numChapters);
 };

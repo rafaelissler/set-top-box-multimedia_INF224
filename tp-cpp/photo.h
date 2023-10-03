@@ -34,7 +34,7 @@ class Photo : public Multimedia {
      */
     void printValues(std::ostream &out) const override {
         out << "Name: " << getName() << ", Path: " << getFilePath() <<
-        ", Latitude: "  << lat << ", Longitude: " << lon << '\n';
+        ", Latitude: "  << lat << ", Longitude: " << lon;
     }
 
     /**
@@ -44,6 +44,8 @@ class Photo : public Multimedia {
         std::string msg = "imagej " + getFilePath() + " &";
         if (system(msg.data()));    // Place in an if statement to ignore the warning message
     }
+
+    std::string getType() const override {return "photo";}
 
     float getLat() const {return lat;}
     float getLon() const {return lon;}

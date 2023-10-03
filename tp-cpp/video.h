@@ -33,7 +33,7 @@ class Video : public Multimedia {
      */
     virtual void printValues(std::ostream &out) const override {
         out << "Name: " << getName() << ", Path: " << getFilePath() <<
-        ", Duration: " << duration << '\n';
+        ", Duration: " << duration;
     }
 
     /**
@@ -44,6 +44,8 @@ class Video : public Multimedia {
 
         if (system(msg.data()));    // Place in an if statement to ignore the warning message
     }
+
+    std::string getType() const override {return "video";}
 
     int getDuration() const {return duration;}
     void setDuration(int duration) {this->duration = duration;}

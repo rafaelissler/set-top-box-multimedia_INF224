@@ -34,6 +34,7 @@ class Multimedia {
 
     std::string getName() const;
     std::string getFilePath() const;
+    virtual std::string getType() const = 0;
 
     void setName(std::string name);
     void setFilePath(std::string filePath);

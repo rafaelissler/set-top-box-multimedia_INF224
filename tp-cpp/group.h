@@ -24,6 +24,7 @@ class Group: public std::list<std::shared_ptr<Multimedia>>{
      * @param out Stream to be outputted to
      */
     void printValues(std::ostream &out) const;
+
     void erase(std::string name);
     
     std::string getName() const;

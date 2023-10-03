@@ -10,16 +10,19 @@
 # Nom du programme
 #
 PROG = tp_multimedia
+CLIENT = client
 
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = multimedia.cpp film.cpp group.cpp manager.cpp main.cpp
+SOURCES = multimedia.cpp film.cpp group.cpp manager.cpp tcp/ccsocket.cpp tcp/tcpserver.cpp main.cpp
+CLIENT_SOURCES = tcp/client.cpp tcp/ccsocket.cpp 
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
 #
 OBJETS = ${SOURCES:%.cpp=%.o}
+CLIENT_OBJETS=${CLIENT_SOURCES:%.cpp=%.o}
 
 #
 # Compilateur C++
@@ -43,7 +46,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Exemple: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS = 
+LDLIBS = -lpthread
 
 
 ##########################################
@@ -66,6 +69,7 @@ ${PROG}: depend-${PROG} ${OBJETS}
 
 clean:
 	-@$(RM) *.o depend-${PROG} core 1>/dev/null 2>&1
+	-@$(RM) *.o depend-${CLIENT} core 1>/dev/null 2>&1
 
 clean-all: clean
 	-@$(RM) ${PROG} 1>/dev/null 2>&1
@@ -73,11 +77,22 @@ clean-all: clean
 tar:
 	tar cvf ${PROG}.tar.gz ${SOURCES}
 
+run-${CLIENT}: depend-${CLIENT} ${CLIENT_OBJETS}
+	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
+	./${CLIENT}
+
+${CLIENT}: depend-${CLIENT} ${CLIENT_OBJETS}
+	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
+	
+
 # Gestion des dependances : creation automatique des dependances en utilisant 
 # l'option -MM de g++ (attention tous les compilateurs n'ont pas cette option)
 #
 depend-${PROG}:
 	${CXX} ${CXXFLAGS} -MM ${SOURCES} > depend-${PROG}
+
+depend-${CLIENT}:
+	${CXX} ${CXXFLAGS} -MM ${CLIENT_SOURCES} > depend-${CLIENT}
 
 
 ###########################################
@@ -102,3 +117,4 @@ depend-${PROG}:
 # Inclusion du fichier des dependances
 #
 -include depend-${PROG}
+-include depend-${CLIENT}

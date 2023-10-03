@@ -43,17 +43,53 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
     if (it != objects.end()) {
         it->second->printValues(out);
     } else {
-        std::cout << "Error: Multimedia object of name " << name << " not found\n";
+        out << "Error: Multimedia object of name " << name << " not found";
+        #ifdef DEBUG
+        std::cout << "[D] Error: Multimedia object of name " << name << " not found\n";
+        #endif
+    }
+}
+
+void Manager::printAll(std::string type, std::ostream &out) const {
+    // Iterate through media objects and print the ones with the given type
+    for (const auto& it : objects) {
+        if (it.second->getType() == type) {
+            out << "{ ";
+            it.second->printValues(out);
+            out << " }";
+        }
+    }
+}
+
+void Manager::printContains(std::string name, std::ostream &out) const {
+    // Search through the groups first
+    for (const auto& it : groups) {
+        if (it.first.find(name) != std::string::npos) {
+            out << "{ ";
+            it.second->printValues(out);
+            out << " }";
+        }
+    }
+    // Search through the multimedia objects
+    for (const auto& it : objects) {
+        if (it.first.find(name) != std::string::npos) {
+            out << "{ ";
+            it.second->printValues(out);
+            out << " }";
+        }
     }
 }
 
 void Manager::printGroup(std::string name, std::ostream &out) const {
     auto it = groups.find(name);
-
+    
     if (it != groups.end()) {
         it->second->printValues(out);
     } else {
-        std::cout << "Error: Group of name " << name << " not found\n";
+        out << "Error: Group of name " << name << " not found";
+        #ifdef DEBUG
+        std::cout << "[D] Error: Group of name " << name << " not found\n";
+        #endif
     }
 }
     
@@ -63,14 +99,18 @@ void Manager::play(std::string name) const {
     if (it != objects.end()) {
         it->second->play();
     } else {
-        std::cout << "Error: Multimedia object of name " << name << " not found\n";
+        #ifdef DEBUG
+        std::cout << "[D] Error: Multimedia object of name " << name << " not found\n";
+        #endif
     }
 }
 
 void Manager::removeMultimedia(std::string name) {
+    // Remove media object from the groups first
     for (const auto& i: groups) {
         i.second->erase(name);
     }
+    // Remove the object itself
     if (objects.erase(name) == 0) {
         std::cout << "Error: Multimedia object of name " << name << " not found\n";
     }
