@@ -24,17 +24,31 @@ class Photo : public Multimedia {
      * @param lat Latitude of the photo
      * @param lon Longitude of the photo
      */
-    Photo(std::string name, std::string filePath, float lat, float lon):
+    Photo(std::string name, std::string filePath, const float lat, const float lon):
     Multimedia(name, filePath), lat(lat), lon(lon) {}
 
     /**
-     * @brief Sends the name, file path, latitude and longitude to output stream
+     * @brief Sends the class variables to output stream
      * 
      * @param out Stream to be outputted to
      */
     void printValues(std::ostream &out) const override {
-        out << "Name: " << getName() << ", Path: " << getFilePath() <<
-        ", Latitude: "  << lat << ", Longitude: " << lon;
+        Multimedia::printValues(out);
+        out << lat << '\n' << lon << '\n';
+    }
+
+    /**
+     * @brief Retreives the class variables from input stream
+     * 
+     * @param out Stream to retreive values from
+     */
+    void readValues(std::istream &in) override {
+        Multimedia::readValues(in);
+        std::string buf;
+        getline(in, buf);
+        lat = stof(buf);
+        getline(in, buf);
+        lon = stof(buf);
     }
 
     /**
@@ -49,8 +63,8 @@ class Photo : public Multimedia {
 
     float getLat() const {return lat;}
     float getLon() const {return lon;}
-    void setLat(float lat) {this->lat = lat;}
-    void setLon(float lon) {this->lon = lon;}
+    void setLat(const float lat) {this->lat = lat;}
+    void setLon(const float lon) {this->lon = lon;}
 };
 
 #endif

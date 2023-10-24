@@ -58,6 +58,14 @@ class Manager {
         int duration, int* chapters, int numChapters);
 
     /**
+     * @brief Factory that creates a multimedia object based on the class name
+     * 
+     * @param name Name of the class to create (e.g.: photo, video, film)
+     * @return std::shared_ptr<Multimedia> A pointer to the object created
+     */
+    std::shared_ptr<Multimedia> createMultimedia(std::string name);
+
+    /**
      * @brief Prints the attributes of a multimedia object
      * 
      * @param name Name of the multimedia object
@@ -66,12 +74,19 @@ class Manager {
     void printMultimedia(std::string name, std::ostream &out) const;
 
     /**
+     * @brief Prints the attributes of all multimedia objects
+     * 
+     * @param out Stream to be outputted to
+     */
+    void printAllMultimedia(std::ostream &out) const;
+
+    /**
      * @brief Prints the attributes of all multimedia objects of a given type
      * 
      * @param type Type of the multimedia object
      * @param out Stream to be outputted to
      */
-    void printAll(std::string type, std::ostream &out) const;
+    void printType(std::string type, std::ostream &out) const;
 
     /**
      * @brief Prints the attributes of all multimedia objects or groups that
@@ -110,6 +125,8 @@ class Manager {
      * @param name Name of the multimedia object
      */
     void play(std::string name) const;
+    
+    void readAll();
 };
 
 #endif

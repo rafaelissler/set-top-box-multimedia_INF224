@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include <sstream>
 #include <map>
@@ -55,7 +56,7 @@ auto getType = [](stringstream &ss, Manager &mngr) -> string {
     string arg;
     ss >> arg;
     stringstream ret;
-    mngr.printAll(arg, ret);
+    mngr.printType(arg, ret);
     return ret.str();
 };
 

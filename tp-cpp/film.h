@@ -22,15 +22,22 @@ class Film : public Video {
      * @param chapters Pointer to table that contains the chapter durations
      * @param numChapters Number of chapters
      */
-    Film(std::string name, std::string filePath, int duration, int* chapters, int numChapters);
+    Film(std::string name, std::string filePath, const int duration,
+    const int* const chapters, const int numChapters);
 
     /**
-     * @brief Sends the name, file path, duration, chapter durations
-     * and number of chapters to output stream
+     * @brief Sends the class variables to output stream
      * 
      * @param out Stream to be outputted to
      */
     void printValues(std::ostream &out) const override;
+
+    /**
+     * @brief Retreives the class variables from input stream
+     * 
+     * @param out Stream to retreive values from
+     */
+    void readValues(std::istream &in) override;
 
     /**
      * @brief Get the Film's chapter durations
@@ -41,7 +48,7 @@ class Film : public Video {
     int getNumChapters() const;
     std::string getType() const override;
 
-    void setChapters(int* chapters, int numChapters);
+    void setChapters(const int* const chapters, const int numChapters);
 };
 
 #endif

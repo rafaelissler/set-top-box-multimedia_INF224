@@ -9,11 +9,10 @@ Group::Group(std::string name): std::list<std::shared_ptr<Multimedia>>(), name(n
 
 void Group::printValues(std::ostream &out) const {
     // Print first the name of the group, then all of it's objects contents
-    out << "Group name: " << name;
+    out << name << '\n';
     for (const auto& i: *this) {
-        out << "{ ";
+        out << i->getType() << '\n';
         i->printValues(out);
-        out << " }";
     }
 }
 

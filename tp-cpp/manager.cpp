@@ -41,6 +41,7 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
     auto it = objects.find(name);
 
     if (it != objects.end()) {
+        out << it->second->getType() << '\n';
         it->second->printValues(out);
     } else {
         out << "Error: Multimedia object of name " << name << " not found";
@@ -50,32 +51,36 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
     }
 }
 
-void Manager::printAll(std::string type, std::ostream &out) const {
+void Manager::printAllMultimedia(std::ostream &out) const {
+    for (const auto& it : objects) {
+        out << it.second->getType() << '\n';
+        it.second->printValues(out);
+    }
+}
+
+void Manager::printType(std::string type, std::ostream &out) const {
     // Iterate through media objects and print the ones with the given type
     for (const auto& it : objects) {
         if (it.second->getType() == type) {
-            out << "{ ";
+            out << it.second->getType() << '\n';
             it.second->printValues(out);
-            out << " }";
         }
     }
 }
 
 void Manager::printContains(std::string name, std::ostream &out) const {
-    // Search through the groups first
+    // Print the groups with the name (including their objects)
     for (const auto& it : groups) {
         if (it.first.find(name) != std::string::npos) {
-            out << "{ ";
+            out << "group\n";
             it.second->printValues(out);
-            out << " }";
         }
     }
     // Search through the multimedia objects
     for (const auto& it : objects) {
         if (it.first.find(name) != std::string::npos) {
-            out << "{ ";
+            out << it.second->getType() << '\n';
             it.second->printValues(out);
-            out << " }";
         }
     }
 }
@@ -84,6 +89,7 @@ void Manager::printGroup(std::string name, std::ostream &out) const {
     auto it = groups.find(name);
     
     if (it != groups.end()) {
+        out << "group\n";
         it->second->printValues(out);
     } else {
         out << "Error: Group of name " << name << " not found";
@@ -129,3 +135,5 @@ void Manager::removeGroup(std::string name) {
     std::cout << "[D] Group of name " << name << " was removed\n";
     #endif
 }
+
+std::shared_ptr<Multimedia> createMultimedia(std::string name);

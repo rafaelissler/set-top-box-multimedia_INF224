@@ -13,7 +13,8 @@ Film::~Film() {
 
 Film::Film(): Video::Video(), chapters(NULL), numChapters(0) {}
 
-Film::Film(std::string name, std::string filePath, int duration, int* chapters, int numChapters):
+Film::Film(std::string name, std::string filePath, const int duration,
+const int* const chapters, const int numChapters):
     Video(name, filePath, duration) {
     this->numChapters = numChapters;
     this->chapters = new int[numChapters];
@@ -23,13 +24,24 @@ Film::Film(std::string name, std::string filePath, int duration, int* chapters, 
 }
 
 void Film::printValues(std::ostream &out) const {
-        out << "Name: " << getName() << ", Path: " << getFilePath() <<
-        ", Duration: " << getDuration() << ", Chapters: {";
-        for (int i = 0; i < numChapters; i++) {
-            out << chapters[i];
-            if (i < (numChapters-1)) out << ", ";
-        }
-        out << "}";
+    Video::printValues(out);
+    out << numChapters << '\n';
+    for (int i = 0; i < numChapters; i++) {
+        out << chapters[i] << (i == (numChapters-1) ? '\n' : ' ');
+    }
+}
+
+void Film::readValues(std::istream &in) {
+    Video::readValues(in);
+    in >> numChapters;
+
+    if (chapters) delete[] chapters;
+    this->chapters = new int[numChapters];
+
+    for (int i = 0; i < numChapters; i++) {
+        in >> chapters[i];
+    }
+    in.get();       // Ignore '\n' after the chapters
 }
 
 int* Film::getChapters() const {
@@ -42,7 +54,7 @@ int* Film::getChapters() const {
 
 int Film::getNumChapters() const {return numChapters;}
 
-void Film::setChapters(int* chapters, int numChapters) {
+void Film::setChapters(const int* const chapters, const int numChapters) {
     delete[] chapters;
     this->numChapters = numChapters;
     this->chapters = new int[numChapters];

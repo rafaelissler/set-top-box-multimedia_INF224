@@ -23,17 +23,29 @@ class Video : public Multimedia {
      * @param filePath Complete path of the file
      * @param duration Duration of the video
      */
-    Video(std::string name, std::string filePath, int duration):
+    Video(std::string name, std::string filePath, const int duration):
     Multimedia(name, filePath), duration(duration) {}
 
     /**
-     * @brief Sends the name, file path and duration of video to output stream
+     * @brief Sends the class variables to output stream
      * 
      * @param out Stream to be outputted to
      */
-    virtual void printValues(std::ostream &out) const override {
-        out << "Name: " << getName() << ", Path: " << getFilePath() <<
-        ", Duration: " << duration;
+    void printValues(std::ostream &out) const override {
+        Multimedia::printValues(out);
+        out << duration << '\n';
+    }
+
+    /**
+     * @brief Retreives the class variables from input stream
+     * 
+     * @param out Stream to retreive values from
+     */
+    void readValues(std::istream &in) override {
+        Multimedia::readValues(in);
+        std::string buf;
+        getline(in, buf);
+        duration = stoi(buf);
     }
 
     /**
@@ -48,7 +60,7 @@ class Video : public Multimedia {
     std::string getType() const override {return "video";}
 
     int getDuration() const {return duration;}
-    void setDuration(int duration) {this->duration = duration;}
+    void setDuration(const int duration) {this->duration = duration;}
 };
 
 #endif
