@@ -13,6 +13,7 @@
 using namespace std;
 
 const int PORT = 4466;
+const char delim = '|';
 
 /**
  * @brief Command to send to client contents of a group
@@ -54,7 +55,7 @@ auto getType = [](stringstream &ss, Manager &mngr) -> string {
     string arg;
     ss >> arg;
     stringstream ret;
-    mngr.printAll(arg, ret);
+    mngr.printType(arg, ret);
     return ret.str();
 };
 

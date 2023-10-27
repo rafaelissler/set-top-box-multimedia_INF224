@@ -1,6 +1,8 @@
 #ifndef PHOTO_H
 #define PHOTO_H
 
+extern const char delim;
+
 /**
  * @brief Class for a photo object
  */
@@ -34,7 +36,7 @@ class Photo : public Multimedia {
      */
     void printValues(std::ostream &out) const override {
         Multimedia::printValues(out);
-        out << lat << '\n' << lon << '\n';
+        out << lat << delim << lon << delim;
     }
 
     /**
@@ -45,9 +47,9 @@ class Photo : public Multimedia {
     void readValues(std::istream &in) override {
         Multimedia::readValues(in);
         std::string buf;
-        getline(in, buf);
+        getline(in, buf, delim);
         lat = stof(buf);
-        getline(in, buf);
+        getline(in, buf, delim);
         lon = stof(buf);
     }
 

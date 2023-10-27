@@ -1,6 +1,8 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
+extern const char delim;
+
 /**
  * @brief Class for a video object
  */
@@ -33,7 +35,7 @@ class Video : public Multimedia {
      */
     void printValues(std::ostream &out) const override {
         Multimedia::printValues(out);
-        out << duration << '\n';
+        out << duration << delim;
     }
 
     /**
@@ -44,7 +46,7 @@ class Video : public Multimedia {
     void readValues(std::istream &in) override {
         Multimedia::readValues(in);
         std::string buf;
-        getline(in, buf);
+        getline(in, buf, delim);
         duration = stoi(buf);
     }
 

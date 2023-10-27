@@ -3,5 +3,5 @@
 *.exe
 tp_multimedia
 depend-tp_multimedia
+depend-server
 *.png
-*.exe

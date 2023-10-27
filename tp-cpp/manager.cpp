@@ -8,6 +8,8 @@
 #include "group.h"
 #include "manager.h"
 
+extern const char delim;
+
 Manager::~Manager() {}
 Manager::Manager() {}
 
@@ -41,7 +43,7 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
     auto it = objects.find(name);
 
     if (it != objects.end()) {
-        out << it->second->getType() << '\n';
+        out << it->second->getType() << delim;
         it->second->printValues(out);
     } else {
         out << "Error: Multimedia object of name " << name << " not found";
@@ -53,7 +55,7 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
 
 void Manager::printAllMultimedia(std::ostream &out) const {
     for (const auto& it : objects) {
-        out << it.second->getType() << '\n';
+        out << it.second->getType() << delim;
         it.second->printValues(out);
     }
 }
@@ -62,7 +64,7 @@ void Manager::printType(std::string type, std::ostream &out) const {
     // Iterate through media objects and print the ones with the given type
     for (const auto& it : objects) {
         if (it.second->getType() == type) {
-            out << it.second->getType() << '\n';
+            out << it.second->getType() << delim;
             it.second->printValues(out);
         }
     }
@@ -72,14 +74,14 @@ void Manager::printContains(std::string name, std::ostream &out) const {
     // Print the groups with the name (including their objects)
     for (const auto& it : groups) {
         if (it.first.find(name) != std::string::npos) {
-            out << "group\n";
+            out << "group" << delim;
             it.second->printValues(out);
         }
     }
     // Search through the multimedia objects
     for (const auto& it : objects) {
         if (it.first.find(name) != std::string::npos) {
-            out << it.second->getType() << '\n';
+            out << it.second->getType() << delim;
             it.second->printValues(out);
         }
     }
@@ -89,7 +91,7 @@ void Manager::printGroup(std::string name, std::ostream &out) const {
     auto it = groups.find(name);
     
     if (it != groups.end()) {
-        out << "group\n";
+        out << "group" << delim;
         it->second->printValues(out);
     } else {
         out << "Error: Group of name " << name << " not found";

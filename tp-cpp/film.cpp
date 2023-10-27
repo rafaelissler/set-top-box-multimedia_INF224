@@ -4,6 +4,8 @@
 #include "video.h"
 #include "film.h"
 
+extern const char delim;
+
 Film::~Film() {
     delete[] chapters;
     #ifdef DEBUG
@@ -25,9 +27,9 @@ const int* const chapters, const int numChapters):
 
 void Film::printValues(std::ostream &out) const {
     Video::printValues(out);
-    out << numChapters << '\n';
+    out << numChapters << delim;
     for (int i = 0; i < numChapters; i++) {
-        out << chapters[i] << (i == (numChapters-1) ? '\n' : ' ');
+        out << chapters[i] << (i == (numChapters-1) ? delim : ' ');
     }
 }
 
@@ -41,7 +43,7 @@ void Film::readValues(std::istream &in) {
     for (int i = 0; i < numChapters; i++) {
         in >> chapters[i];
     }
-    in.get();       // Ignore '\n' after the chapters
+    in.get();       // Ignore last delimitation after the chapters
 }
 
 int* Film::getChapters() const {

@@ -5,13 +5,15 @@
 #include "multimedia.h"
 #include "group.h"
 
+extern const char delim;
+
 Group::Group(std::string name): std::list<std::shared_ptr<Multimedia>>(), name(name) {}
 
 void Group::printValues(std::ostream &out) const {
     // Print first the name of the group, then all of it's objects contents
-    out << name << '\n';
+    out << name << delim;
     for (const auto& i: *this) {
-        out << i->getType() << '\n';
+        out << i->getType() << delim;
         i->printValues(out);
     }
 }
