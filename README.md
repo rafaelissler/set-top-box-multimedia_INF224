@@ -84,5 +84,7 @@ There is no scrolling implemented for the text box.
 
 ## General notes
 The name of the multimedia object is just an identifier. The object will be played using its path name, which has the name of the file itself.
+
 A default set of multimedia objects, stored in "_objects.txt", will be read and loaded at the start of execution.
+
 The message delimiter | was chosen to allow spacebar in the name of the files. Now, the character | is not allowed in the name and path of an object.
