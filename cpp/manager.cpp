@@ -66,7 +66,6 @@ std::shared_ptr<Multimedia> Manager::createMultimedia(std::string nameType, std:
     } else if (nameType == "film") {
         return createFilm(name, "", 0, nullptr, 0);
     } else {
-        throw std::runtime_error("Name type " + nameType + " does not exist\n");
         return nullptr;
     }
 }
