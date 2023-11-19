@@ -17,7 +17,8 @@ class Manager {
      * @brief Create a group
      * 
      * @param name Name of the group
-     * @return std::shared_ptr<Group> A pointer to the group created
+     * @return Returns a pointer to the group std::shared_ptr<Group> if the operation was
+     * succesfull or NULL if a group with the same name already exists
      */
     std::shared_ptr<Group> createGroup(std::string name);
 
@@ -28,7 +29,8 @@ class Manager {
      * @param filePath Complete path of the file
      * @param lat Latitude of the photo
      * @param lon Longitude of the photo
-     * @return std::shared_ptr<Photo> A pointer to the photo created
+     * @return Return a pointer to the Photo created std::shared_ptr<Photo> if the operation
+     * was succesfull or an empty Photo if an object with same name already exists
      */
     std::shared_ptr<Photo> createPhoto(std::string name, std::string filePath,
         float lat, float lon);
@@ -39,7 +41,8 @@ class Manager {
      * @param name Name of the file
      * @param filePath Complete path of the file
      * @param duration Duration of the video
-     * @return std::shared_ptr<Video> A pointer to the video created
+     * @return Return a pointer to the Video created std::shared_ptr<Photo> if the operation
+     * was succesfull or an empty Video if an object with same name already exists
      */
     std::shared_ptr<Video> createVideo(std::string name, std::string filePath,
         int duration);
@@ -52,7 +55,8 @@ class Manager {
      * @param duration Duration of the video
      * @param chapters Pointer to table that contains the chapter durations
      * @param numChapters Number of chapters
-     * @return std::shared_ptr<Film> A pointer to the film created
+     * @return Return a pointer to the Film created std::shared_ptr<Photo> if the operation
+     * was succesfull or an empty Film if an object with same name already exists
      */
     std::shared_ptr<Film> createFilm(std::string name, std::string filePath,
         int duration, int* chapters, int numChapters);
@@ -60,10 +64,20 @@ class Manager {
     /**
      * @brief Factory that creates a multimedia object based on the class name
      * 
-     * @param name Name of the class to create (e.g.: photo, video, film)
-     * @return std::shared_ptr<Multimedia> A pointer to the object created
+     * @param nameType Name of the class to create (e.g.: photo, video, film)
+     * @param name Name of the object
+     * @return Return a pointer to the Multimedia object created std::shared_ptr<Multimedia>
+     * if the operation was succesfull or an empty Multimedia if an object with same name already exists
+     * or NULL if the nameType was unknown
      */
-    std::shared_ptr<Multimedia> createMultimedia(std::string name);
+    std::shared_ptr<Multimedia> createMultimedia(std::string nameType, std::string name);
+
+    /**
+     * @brief Reads from an input stream and stores the objects
+     * 
+     * @param in Stream to read from
+     */
+    void readFromFile(std::istream &in);
 
     /**
      * @brief Prints the attributes of a multimedia object
@@ -74,7 +88,7 @@ class Manager {
     void printMultimedia(std::string name, std::ostream &out) const;
 
     /**
-     * @brief Prints the attributes of all multimedia objects
+     * @brief Prints the attributes of all multimedia objects and groups
      * 
      * @param out Stream to be outputted to
      */
@@ -110,14 +124,14 @@ class Manager {
      * 
      * @param name Name of the multimedia object
      */
-    void removeMultimedia(std::string name);
+    std::string removeMultimedia(std::string name);
 
     /**
      * @brief Removes a group from the manager
      * 
      * @param name Name of the group
      */
-    void removeGroup(std::string name);
+    std::string removeGroup(std::string name);
 
     /**
      * @brief Plays a multimedia object
@@ -125,8 +139,22 @@ class Manager {
      * @param name Name of the multimedia object
      */
     void play(std::string name) const;
-    
-    void readAll();
+
+    /**
+     * @brief Get the object by its name
+     * 
+     * @param name Name of the object
+     * @return std::shared_ptr<Multimedia> 
+     */
+    std::shared_ptr<Multimedia> getObjectByName(std::string name);
+
+    /**
+     * @brief Get the group by its name
+     * 
+     * @param name Name of the group
+     * @return std::shared_ptr<Group> 
+     */
+    std::shared_ptr<Group> getGroupByName(std::string name);
 };
 
 #endif

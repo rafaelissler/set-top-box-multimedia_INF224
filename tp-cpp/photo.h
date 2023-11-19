@@ -47,10 +47,10 @@ class Photo : public Multimedia {
     void readValues(std::istream &in) override {
         Multimedia::readValues(in);
         std::string buf;
-        getline(in, buf, delim);
-        lat = stof(buf);
-        getline(in, buf, delim);
-        lon = stof(buf);
+        std::getline(in, buf, delim);
+        lat = std::stof(buf);
+        std::getline(in, buf, delim);
+        lon = std::stof(buf);
     }
 
     /**

@@ -46,8 +46,8 @@ class Video : public Multimedia {
     void readValues(std::istream &in) override {
         Multimedia::readValues(in);
         std::string buf;
-        getline(in, buf, delim);
-        duration = stoi(buf);
+        std::getline(in, buf, delim);
+        duration = std::stoi(buf);
     }
 
     /**

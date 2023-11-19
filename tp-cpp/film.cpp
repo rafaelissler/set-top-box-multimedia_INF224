@@ -35,7 +35,10 @@ void Film::printValues(std::ostream &out) const {
 
 void Film::readValues(std::istream &in) {
     Video::readValues(in);
-    in >> numChapters;
+
+    std::string buf;
+    getline(in, buf, delim);
+    numChapters = std::stoi(buf);
 
     if (chapters) delete[] chapters;
     this->chapters = new int[numChapters];
