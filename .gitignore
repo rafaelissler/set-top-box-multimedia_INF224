@@ -5,3 +5,4 @@ tp_multimedia
 depend-tp_multimedia
 *.png
 client.cpp
+*.class

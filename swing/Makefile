@@ -14,7 +14,7 @@ PROG = MainWindow
 #
 # Fichiers sources .java
 #
-SOURCES = swing/MainWindow.java swing/Client.java 
+SOURCES = MainWindow.java Client.java 
 
 #
 # Compilateur Java
@@ -35,7 +35,7 @@ JFLAGS = -g
 all: classes
 
 run: all
-	java swing.${PROG}
+	java ${PROG}
 
 classes: $(SOURCES:.java=.class)
 
@@ -54,7 +54,7 @@ tar:
 .SUFFIXES: .java .class
 
 .java.class:
-	$(JC) $(JFLAGS) swing/*.java
+	$(JC) $(JFLAGS) *.java
 
 
 
