@@ -80,8 +80,6 @@ void Manager::readFromFile(std::istream &in) {
     // of multimedia objects/groups, so we will peek the name on the file
 
     while (std::getline(in, buf, delim)) {
-        std::cout << buf << '\n';
-
         // Will check if it's: a group, a "no group" indicator or if it's a multimedia object
         if (buf == "group") {
             std::getline(in, buf, delim);
