@@ -17,9 +17,9 @@ Manager::~Manager() {}
 Manager::Manager() {}
 
 std::shared_ptr<Group> Manager::createGroup(std::string name) {
-    // If it exists a group with same name, return NULL
+    // If it exists a group with same name, return nullptr
     auto found = groups.find(name);
-    if (found != groups.end()) return NULL;
+    if (found != groups.end()) return nullptr;
 
     groups.emplace(name, std::make_shared<Group>(name));
     return groups[name];
@@ -27,7 +27,7 @@ std::shared_ptr<Group> Manager::createGroup(std::string name) {
 
 std::shared_ptr<Photo> Manager::createPhoto(std::string name, std::string filePath,
 float lat, float lon) {
-    // If it exists an object with same name, return NULL
+    // If it exists an object with same name, returns an empty object without name
     auto found = objects.find(name);
     if (found != objects.end()) return std::make_shared<Photo>();
 
@@ -38,7 +38,7 @@ float lat, float lon) {
 
 std::shared_ptr<Video> Manager::createVideo(std::string name, std::string filePath,
 int duration) {
-    // If it exists an object with same name, return NULL
+    // If it exists an object with same name, return an empty object without name
     auto found = objects.find(name);
     if (found != objects.end()) return std::make_shared<Video>();
 
@@ -49,7 +49,7 @@ int duration) {
 
 std::shared_ptr<Film> Manager::createFilm(std::string name, std::string filePath,
 int duration, int* chapters, int numChapters) {
-    // If it exists an object with same name, return NULL
+    // If it exists an object with same name, return an empty object without name
     auto found = objects.find(name);
     if (found != objects.end()) return std::make_shared<Film>();
 
@@ -64,10 +64,10 @@ std::shared_ptr<Multimedia> Manager::createMultimedia(std::string nameType, std:
     } else if (nameType == "video") {
         return createVideo(name, "", 0);
     } else if (nameType == "film") {
-        return createFilm(name, "", 0, NULL, 0);
+        return createFilm(name, "", 0, nullptr, 0);
     } else {
         throw std::runtime_error("Name type " + nameType + " does not exist\n");
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -85,7 +85,7 @@ void Manager::readFromFile(std::istream &in) {
             std::getline(in, buf, delim);
             // Create group. If we already created this group, just continue the loop
             std::shared_ptr<Group> group = createGroup(buf);
-            if (group == NULL) continue;
+            if (group == nullptr) continue;
             groupToLink = buf;
         }
         else if (buf == "no groups") {
@@ -107,7 +107,7 @@ void Manager::readFromFile(std::istream &in) {
             // If we need to link this object to a group, do it now
             if (groupToLink != "") {
                 std::shared_ptr<Group> group = getGroupByName(groupToLink);
-                if (group == NULL) continue;
+                if (group == nullptr) continue;
                 group->push_back(obj);
             }
         }
@@ -122,7 +122,6 @@ void Manager::printMultimedia(std::string name, std::ostream &out) const {
         it->second->printValues(out);
     } else {
         out << "Error: Multimedia object of name " << name << " not found";
-        std::cerr << "Error: Multimedia object of name " << name << " not found\n";
     }
 }
 
@@ -180,7 +179,6 @@ void Manager::printGroup(std::string name, std::ostream &out) const {
         it->second->printValues(out);
     } else {
         out << "Error: Group of name " << name << " not found";
-        std::cerr << "Error: Group of name " << name << " not found\n";
     }
 }
     
@@ -189,8 +187,6 @@ void Manager::play(std::string name) const {
 
     if (it != objects.end()) {
         it->second->play();
-    } else {
-        std::cerr << "Error: Multimedia object of name " << name << " not found\n";
     }
 }
 
@@ -204,7 +200,6 @@ std::string Manager::removeMultimedia(std::string name) {
     // Remove the object itself
     if (objects.erase(name) == 0) {
         ret = "Error: Multimedia object of name " + name + " not found";
-        std::cout << ret << '\n';
     }
 
     #ifdef DEBUG
@@ -219,7 +214,6 @@ std::string Manager::removeGroup(std::string name) {
 
     if (groups.erase(name) == 0) {
         ret = "Error: Group of name " + name + " not found";
-        std::cout << ret << '\n';
     }
 
     #ifdef DEBUG
@@ -235,8 +229,7 @@ std::shared_ptr<Multimedia> Manager::getObjectByName(std::string name) {
     if (it != objects.end()) {
         return it->second;
     } else {
-        std::cerr << "Error: Multimedia object of name " << name << " not found\n";
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -246,7 +239,6 @@ std::shared_ptr<Group> Manager::getGroupByName(std::string name) {
     if (it != groups.end()) {
         return it->second;
     } else {
-        std::cerr << "Error: Group of name " << name << " not found\n";
-        return NULL;
+        return nullptr;
     }
 }

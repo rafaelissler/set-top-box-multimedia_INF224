@@ -107,6 +107,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void setupClient(String[] args) {
+		// Setups the client
 	    String host = "localhost";
 	    int port = 4466;
 	    if (args.length >=1) host = args[0];
@@ -124,6 +125,8 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void parseResponse(String response) {
+		// Just makes the objects received by the server more readable to human eyes
+		// Don't worry about this
 		textArea.setText("");
 		String[] fields = response.split(delimiter);
 		

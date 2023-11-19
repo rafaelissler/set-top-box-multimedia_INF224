@@ -68,4 +68,19 @@ void Film::setChapters(const int* const chapters, const int numChapters) {
     }
 }
 
+Film::Film(const Film &other): Video(other) {
+    this->numChapters = other.numChapters;
+    this->chapters = new int(*other.chapters);
+}
+
+Film &Film::operator=(const Film &other) {
+    Video::operator=(other);
+    this->numChapters = other.numChapters;
+
+    delete chapters;
+    this->setChapters(other.chapters, other.numChapters);
+
+    return *this;
+}
+
 std::string Film::getType() const {return "film";}

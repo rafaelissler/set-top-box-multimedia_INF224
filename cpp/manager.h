@@ -18,7 +18,7 @@ class Manager {
      * 
      * @param name Name of the group
      * @return Returns a pointer to the group std::shared_ptr<Group> if the operation was
-     * succesfull or NULL if a group with the same name already exists
+     * succesfull or nullptr if a group with the same name already exists
      */
     std::shared_ptr<Group> createGroup(std::string name);
 
@@ -68,7 +68,7 @@ class Manager {
      * @param name Name of the object
      * @return Return a pointer to the Multimedia object created std::shared_ptr<Multimedia>
      * if the operation was succesfull or an empty Multimedia if an object with same name already exists
-     * or NULL if the nameType was unknown
+     * or nullptr if the nameType was unknown
      */
     std::shared_ptr<Multimedia> createMultimedia(std::string nameType, std::string name);
 
@@ -144,7 +144,8 @@ class Manager {
      * @brief Get the object by its name
      * 
      * @param name Name of the object
-     * @return std::shared_ptr<Multimedia> 
+     * @return Returns the object std::shared_ptr<Multimedia> if the operation was succesful
+     * or nullptr if an object wasn't found
      */
     std::shared_ptr<Multimedia> getObjectByName(std::string name);
 
@@ -152,7 +153,8 @@ class Manager {
      * @brief Get the group by its name
      * 
      * @param name Name of the group
-     * @return std::shared_ptr<Group> 
+     * @return Returns the group std::shared_ptr<Group> if the operation was succesful or
+     * nullptr if a group wasn't found
      */
     std::shared_ptr<Group> getGroupByName(std::string name);
 };
