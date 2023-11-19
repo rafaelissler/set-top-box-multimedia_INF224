@@ -89,6 +89,7 @@ public class MainWindow extends JFrame{
 		JScrollPane panelTextScroll = new JScrollPane(textArea);
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
+		textArea.setText(startupMsg);
 		
 		// Add components to main windows
 		this.add(panelTextScroll, BorderLayout.CENTER);
@@ -127,28 +128,35 @@ public class MainWindow extends JFrame{
 		textArea.setText("");
 		String[] fields = response.split(delimiter);
 		
+		boolean writeName;
 		int depth;
 		String prefix;
 		
 		for (int i = 0; i < fields.length; i++) {
+			writeName = false;
 			depth = 2;
 			prefix = "";
 			if (fields[i].equals("group")) {
+				depth = 0;
+				writeName = true;
+			}
+			else if (fields[i].equals("no groups")) {
 				depth = 0;
 			}
 			for (String name : types) {
 				if (fields[i].equals(name)) {
 					depth = 1;
+					writeName = true;
 					break;
 				}
 			}
 			
 			for (int j = 0; j < depth; j++) {
-				prefix += "   ";
+				prefix += "    ";
 			}
 			textArea.append(prefix);
 			
-			if (depth < 2) {
+			if (writeName) {
 				textArea.append(fields[i++]);
 				textArea.append(" : ");
 			}
@@ -167,25 +175,25 @@ public class MainWindow extends JFrame{
 			System.out.println("ActionPerformed");
 			String msg = "";
 			if (getButton.isSelected()) {
-				msg = "get ";
+				msg = "get|";
 			} else if (getTypeButton.isSelected()) {
-				msg = "get-type ";
+				msg = "get-type|";
 			} else if (getNameButton.isSelected()) {
-				msg = "get-has ";
+				msg = "get-has|";
 			} else if (getGroupButton.isSelected()) {
-				msg = "get-group ";
+				msg = "get-group|";
 			} else if (playButton.isSelected()) {
-				msg = "play ";
+				msg = "play|";
 			} else if (removeObjectButton.isSelected()) {
-				msg = "remove ";
+				msg = "remove|";
 			} else if (removeGroupButton.isSelected()) {
-				msg = "remove-group ";
+				msg = "remove-group|";
 			} else if (createGroupButton.isSelected()) {
-				msg = "create-group ";
+				msg = "create-group|";
 			} else if (createObjectButton.isSelected()) {
-				msg = "create ";
+				msg = "create|";
 			} else if (addToGroupButton.isSelected()) {
-				msg = "link ";
+				msg = "link|";
 			} else return;
 			
 			msg += textField.getText();
@@ -194,4 +202,25 @@ public class MainWindow extends JFrame{
 			parseResponse(response);
 		}
 	}
+	String startupMsg = "# INF224 - Set-Top Box Multimédia\r\n"
+			+ "#### Rafael Issler Rodrigues\r\n"
+			+ "\r\n"
+			+ "### How to use:\r\n"
+			+ "Select a function (one of the buttons above the input box), type on the text input box and then click on \"Send\".\r\n"
+			+ "\r\n"
+			+ "### Commands\r\n"
+			+ "- Get object: Prints the multimedia object with the given name on the input box\r\n"
+			+ "- Get object of type: Prints the multimedia object with the given type on the input box. Currently, all the objects are of type photo, video or film\r\n"
+			+ "- Get object that has: Prints the multimedia objects and groups (alongside with their objects) with a string in their name. The string is given on the input box. Leave the input box empty to get a list of everything.\r\n"
+			+ "- Get group: Prints the group with the given name on the input box and all the multimedia objects associated with it\r\n"
+			+ "- Play object: Plays the multimedia object with the given name on the input box\r\n"
+			+ "- Create object: Creates an object. The input box must be structured following the serialization protocol, using the symbol | as the delimiter\r\n"
+			+ "Example 1: photo|family|~/family.png|200|300|\r\n"
+			+ "Example 2: video|telecom presentation|C:\\Photos\\telecom(1).mp4|15|\r\n"
+			+ "Example 3: film|oppenheimer 2023|oppenheimer.mov|50|4|10 5 20 15|\r\n"
+			+ "- Create group: Creates a group with the given game on the input box\r\n"
+			+ "- Add to group: Link a multimedia object to a group. The input box must use the delimiter | and follow the pattern: \\<group\\>|\\<object\\>\r\n"
+			+ "- Remove object: Removes the multimedia object with the given name on the input box\r\n"
+			+ "- Remove group: Removes the group with the given name on the input box\r\n"
+			+ "";
 }
