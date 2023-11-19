@@ -87,4 +87,4 @@ The name of the multimedia object is just an identifier. The object will be play
 
 A default set of multimedia objects, stored in "_objects.txt", will be read and loaded at the start of execution.
 
-The message delimiter | was chosen to allow spacebar in the name of the files. Now, the character | is not allowed in the name and path of an object.
+The message delimiter | was chosen to allow spacebar in the name of the files and to allow messages between client and server to have spaces. Now, the character | is not allowed in the name and path of an object.

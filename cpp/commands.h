@@ -84,6 +84,8 @@ auto createObject = [](stringstream &ss, Manager &mngr) -> string {
     ss.seekg(point, std::ios_base::beg);
     std::shared_ptr<Multimedia> obj = mngr.createMultimedia(type, arg);
 
+    if (obj->getName() != arg || obj == nullptr) return "Error: Please use the correct format";
+
     obj->readValues(ss);
     return "Created object " + arg;
 };
