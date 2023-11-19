@@ -151,15 +151,10 @@ int main(int argc, const char* argv[]) {
     startupCmds();
     Manager mngr;
 
-    std::ifstream file1("_objects2.txt");
+    std::ifstream file1("_objects.txt");
     if (!file1) return 1;
     mngr.readFromFile(file1);
     file1.close();
-
-    std::ofstream file2("_objects3.txt");
-    if (!file2) return 1;
-    mngr.printAllMultimedia(file2);
-    file2.close();
 
     // Define the callback of server
     shared_ptr<TCPServer> server = make_shared<TCPServer>([&]
