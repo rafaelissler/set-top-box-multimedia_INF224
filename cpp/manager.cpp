@@ -141,9 +141,14 @@ void Manager::printType(std::string type, std::ostream &out) const {
 
 void Manager::printContains(std::string name, std::ostream &out) const {
     std::vector<std::string> alreadyPrinted;
+    
+    // Only print "no groups" if a group was printed at all. Otherwise, there's no need
+    int printNoGroups = 0;
+
     // Print the groups with the name (including their objects)
     for (const auto& it : groups) {
         if (it.first.find(name) != std::string::npos) {
+            printNoGroups = 1;
             // If the group has a string in its name, print it
             out << "group" << delim;
             it.second->printValues(out);
@@ -155,15 +160,14 @@ void Manager::printContains(std::string name, std::ostream &out) const {
     }
 
     // Search through the multimedia objects without groups
-    int firstToPrint = 1;
     for (const auto& it : objects) {
         // Find if the object was already printed in a group
         auto found = std::find(alreadyPrinted.begin(), alreadyPrinted.end(), it.first);
         if (it.first.find(name) != std::string::npos && found == alreadyPrinted.end()) {
             // If the object has a string in its name and wasn't already printed, print it
-            if (firstToPrint) {
+            if (printNoGroups) {
                 out << "no groups" << delim;
-                firstToPrint = 0;
+                printNoGroups = 0;
             }   
             out << it.second->getType() << delim;
             it.second->printValues(out);

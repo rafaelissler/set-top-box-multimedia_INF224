@@ -68,11 +68,6 @@ void Film::setChapters(const int* const chapters, const int numChapters) {
     }
 }
 
-Film::Film(const Film &other): Video(other) {
-    this->numChapters = other.numChapters;
-    this->chapters = new int(*other.chapters);
-}
-
 Film &Film::operator=(const Film &other) {
     Video::operator=(other);
     this->numChapters = other.numChapters;
@@ -81,6 +76,11 @@ Film &Film::operator=(const Film &other) {
     this->setChapters(other.chapters, other.numChapters);
 
     return *this;
+}
+
+Film::Film(const Film &other): Video(other) {
+    this->numChapters = other.numChapters;
+    this->setChapters(other.chapters, other.numChapters);
 }
 
 std::string Film::getType() const {return "film";}

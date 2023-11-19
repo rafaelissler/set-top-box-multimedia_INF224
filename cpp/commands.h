@@ -105,10 +105,14 @@ auto addToGroup = [](stringstream &ss, Manager &mngr) -> string {
     string arg;
     getline(ss, arg, delim);
     shared_ptr<Group> group = mngr.getGroupByName(arg);
+    if (group == nullptr) return "Group not found: " + arg;
+
     getline(ss, arg, delim);
     std::shared_ptr<Multimedia> object = mngr.getObjectByName(arg);
+    if (object == nullptr) return "Object not found: " + arg;
+
     group->push_back(object);
-    return "Object linked to group " + arg;
+    return "Object " + arg + "linked to group " + group->getName();
 };
 
 map<string,function<string(stringstream&, Manager&)>> cmds;
